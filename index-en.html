@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Detox Index Test</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-selector">
+            <a href="index.html?lang=ko" class="lang-btn">KO</a>
+            <a href="index.html?lang=en" class="lang-btn">EN</a>
+        </div>
+        <div id="start-screen">
+            <h1>Digital Detox Index Test</h1>
+            <p>How close are you to the digital world?<br>Take a simple test to check your digital habits.</p>
+            <button id="start-btn">Start Test</button>
+        </div>
+        <div id="question-screen" class="hidden">
+            <div class="question-header">
+                <div class="question-counter"></div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+            </div>
+            <h2 id="question-title"></h2>
+            <div class="options">
+                <button class="option-btn" data-score="2">Strongly Agree</button>
+                <button class="option-btn" data-score="1">Agree</button>
+                <button class="option-btn" data-score="0">Disagree</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Digital Detox Check | <a href="privacy-en.html">Privacy Policy</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

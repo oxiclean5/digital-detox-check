@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테스트 결과</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="result-screen">
+            <!-- 결과 내용은 아래 스크립트에 의해 동적으로 채워집니다 -->
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Digital Detox Check | <a href="privacy.html">개인정보처리방침</a></p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const resultScreen = document.getElementById('result-screen');
+            const params = new URLSearchParams(window.location.search);
+            const level = params.get('level');
+            const score = params.get('score');
+            const lang = params.get('lang') === 'en' ? 'en' : 'ko';
+
+            // 카카오 SDK 초기화
+            Kakao.init('aa8b0feb153da6756132986b3e91f515');
+
+            // script.js에서 다국어 결과 데이터 가져오기
+            const results = window.getResultsData();
+            const resultData = results[lang][level] || results[lang]['safe'];
+
+            // script.js에서 공유 데이터 가져오기
+            const shareData = window.getShareData(resultData);
+
+            // --- 시각적 요소 데이터 ---
+            const visualData = {
+                safe: {
+                    icon: 'fa-solid fa-face-smile-beam',
+                    color: '#2ecc71',
+                    image: 'img/safe.png'
+                },
+                warning: {
+                    icon: 'fa-solid fa-face-meh',
+                    color: '#f39c12',
+                    image: 'img/warning.png'
+                },
+                danger: {
+                    icon: 'fa-solid fa-face-dizzy',
+                    color: '#e74c3c',
+                    image: 'img/danger.png'
+                }
+            };
+            const visual = visualData[level] || visualData['safe'];
+            const scorePercentage = (score / 20) * 100; // 최대 점수 20점 기준
+
+            let solutionsHtml = '<ul>';
+            resultData.solutions.forEach(solution => {
+                solutionsHtml += `<li>${solution}</li>`;
+            });
+            solutionsHtml += '</ul>';
+
+            resultScreen.innerHTML = `
+                <i class="result-icon ${visual.icon}" style="color: ${visual.color};"></i>
+                <h2>${resultData.title}</h2>
+                
+                <div class="score-gauge">
+                    <div class="gauge-bar" style="width: ${scorePercentage}%; background-color: ${visual.color};"></div>
+                </div>
+                <p id="score-text">${lang === 'en' ? 'My Score:' : '내 점수:'} ${score}점</p>
+                
+                <img src="${visual.image}" alt="${resultData.title}" class="result-image">
+
+                <p>${resultData.description}</p>
+                <div class="result-content">
+                    <h3>${lang === 'en' ? 'How to practice:' : '이렇게 실천해보세요!'}</h3>
+                    ${solutionsHtml}
+                </div>
+                <div class="share-buttons">
+                    <p class="share-title">${lang === 'en' ? 'Share Result' : '결과 공유하기'}</p>
+                    <button id="kakao-share-btn" class="share-btn kakao"><i class="fa-solid fa-comment"></i> ${lang === 'en' ? 'KakaoTalk' : '카카오톡'}</button>
+                    <button id="line-share-btn" class="share-btn line"><i class="fa-brands fa-line"></i> ${lang === 'en' ? 'LINE' : '라인'}</button>
+                    <button id="facebook-share-btn" class="share-btn facebook"><i class="fa-brands fa-facebook-f"></i> ${lang === 'en' ? 'Facebook' : '페이스북'}</button>
+                    <button id="copy-link-btn" class="share-btn instagram"><i class="fa-brands fa-instagram"></i> ${lang === 'en' ? 'Copy Link for Instagram' : '인스타용 링크 복사'}</button>
+                </div>
+                <div class="info-link-container">
+                    <a href="article.html?lang=${lang}" class="info-link">${lang === 'en' ? 'Learn more about Digital Detox &rarr;' : '디지털 디톡스에 대해 더 알아보기 &rarr;'}</a>
+                </div>
+                <button id="restart-btn">${lang === 'en' ? 'Retake Test' : '테스트 다시하기'}</button>
+            `;
+
+            // --- 공유 버튼 이벤트 리스너 ---
+            document.getElementById('kakao-share-btn').addEventListener('click', () => {
+                Kakao.Share.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: shareData.title,
+                        description: shareData.description,
+                        imageUrl: 'img/share_thumbnail.png', // 대표 이미지
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href,
+                        },
+                    },
+                    buttons: [
+                        {
+                            title: shareData.testLinkTitle,
+                            link: {
+                                mobileWebUrl: `https://your-website-url.com?lang=${lang}`, // 배포 후 실제 주소로 변경
+                                webUrl: `https://your-website-url.com?lang=${lang}`, // 배포 후 실제 주소로 변경
+                            },
+                        },
+                    ],
+                });
+            });
+
+            document.getElementById('facebook-share-btn').addEventListener('click', () => {
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+            });
+
+            document.getElementById('line-share-btn').addEventListener('click', () => {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent(shareData.title);
+                window.open(`https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
+            });
+
+            document.getElementById('copy-link-btn').addEventListener('click', (e) => {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    e.target.textContent = lang === 'en' ? 'Copied!' : '복사 완료!';
+                    setTimeout(() => {
+                        e.target.textContent = lang === 'en' ? 'Copy Link for Instagram' : '인스타용 링크 복사';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Could not copy text: ', err);
+                    alert(lang === 'en' ? 'Failed to copy link.' : '링크 복사에 실패했어요.');
+                });
+            });
+
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                window.location.href = `index.html?lang=${lang}`;
+            });
+        });
+    </script>
+</body>
+</html>

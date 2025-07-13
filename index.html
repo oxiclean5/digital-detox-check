@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디지털 디톡스 지수 테스트</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="lang-selector">
+            <a href="index.html?lang=ko" class="lang-btn">KO</a>
+            <a href="index.html?lang=en" class="lang-btn">EN</a>
+        </div>
+        <div id="start-screen">
+            <h1>디지털 디톡스 지수 테스트</h1>
+            <p>나는 디지털 세상과 얼마나 가까울까요?<br>간단한 테스트를 통해 나의 디지털 사용 습관을 점검해보세요.</p>
+            <button id="start-btn">테스트 시작하기</button>
+            <div class="info-link-container">
+                <a href="article.html" class="info-link">디지털 디톡스, 왜 필요할까? &rarr;</a>
+                <a href="article-weekend.html" class="info-link">스마트폰 없이 주말 보내기 꿀팁 &rarr;</a>
+                <a href="article-work.html" class="info-link">업무 집중력을 높여주는 디지털 습관 &rarr;</a>
+            </div>
+        </div>
+        <div id="question-screen" class="hidden">
+            <div class="question-header">
+                <div class="question-counter"></div>
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+            </div>
+            <h2 id="question-title"></h2>
+            <div class="options">
+                <button class="option-btn" data-score="2">매우 그렇다</button>
+                <button class="option-btn" data-score="1">가끔 그렇다</button>
+                <button class="option-btn" data-score="0">전혀 그렇지 않다</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Digital Detox Check | <a href="privacy.html">개인정보처리방침</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
