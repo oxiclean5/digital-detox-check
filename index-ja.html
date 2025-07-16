@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>デジタルデトックス指数テスト</title>
+    <meta name="description" content="デジタルデトックス指数テストであなたのデジタル習慣をチェックし、健康的なデジタルライフのヒントを得ましょう。">
+    <meta name="keywords" content="デジタルデトックス, スマホ依存, デジタル習慣, テスト, 集中力, 健康的な使い方">
+    <link rel="stylesheet" href="style.css">
+    <script>
+    window.questions_ja = [ 
+        "ベッドに入ってもスマートフォンを手放せないことが多い。",
+        "特別な通知がなくても頻繁にスマートフォンを確認してしまう。",
+        "友達や家族と一緒にいるとき、会話よりもスマートフォンに集中してしまうことがある。",
+        "ちょっと見るつもりで始めたのに、予想よりずっと長くスマートフォンを使い続けてしまう。",
+        "スマートフォンが近くにないと不安や焦りを感じる。",
+        "ストレスや落ち込んだとき、気分転換のためにスマートフォンの世界に逃げる傾向がある。",
+        "トイレに行くときや短い移動でも必ずスマートフォンを持っていく。",
+        "仕事や勉強に集中すべきとき、スマートフォンで集中が途切れることが多い。",
+        "スマートフォンを長時間使用した後、目が疲れたり首や肩に痛みを感じる。",
+        "スマートフォンの使用で他の趣味や運動がおろそかになったと感じる。"
+    ];
+    </script>
+</head>
+<body>
+    <header role="banner">
+        
+    </header>
+    <main role="main">
+        <section class="container" aria-labelledby="main-title">
+            <nav class="lang-selector" aria-label="言語選択" role="navigation">
+                <a href="index.html" class="lang-btn">한국어</a>
+                <a href="index-en.html" class="lang-btn">English</a>
+                <a href="index-ja.html" class="lang-btn" aria-current="page">日本語</a>
+            </nav>
+            <section id="start-screen">
+                <h1 id="main-title">デジタルデトックスお楽しみテスト</h1>
+                <h2 class="visually-hidden">スマホ依存、デジタル習慣セルフチェック</h2>
+                <p>あなたのスマホ習慣、どれくらい深刻？<br>気軽にできる楽しいテストでデジタル生活をチェックしましょう！</p>
+                <button id="start-btn" aria-label="テスト開始">今すぐ始める 🚀</button>
+                <nav class="info-link-container" aria-label="関連情報" role="navigation">
+                    <h3 class="visually-hidden">デジタルデトックス関連情報</h3>
+                    <a href="article-ja.html" class="info-link" title="なぜデジタルデトックス？">デトックスって何？ &rarr;</a>
+                    <a href="article-weekend-ja.html" class="info-link" title="スマホなし週末のコツ">週末はスマホなしで過ごそう &rarr;</a>
+                    <a href="article-work-ja.html" class="info-link" title="仕事に集中するデジタル習慣">仕事中スマホ断ちのコツ &rarr;</a>
+                </nav>
+            </section>
+            <section id="question-screen" class="hidden" aria-labelledby="question-title">
+                <div class="question-header">
+                    <div class="question-counter" aria-live="polite"></div>
+                    <div class="progress-bar" aria-label="進行率">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+                <h2 id="question-title">質問</h2>
+                <div class="options" role="group" aria-label="回答選択肢">
+                    <button class="option-btn" data-score="2" aria-label="とてもそう思う">とてもそう思う</button>
+                    <button class="option-btn" data-score="1" aria-label="時々そう思う">時々そう思う</button>
+                    <button class="option-btn" data-score="0" aria-label="全くそう思わない">全くそう思わない</button>
+                </div>
+            </section>
+        </section>
+    </main>
+    <footer class="footer" role="contentinfo">
+        <p>&copy; 2025 Digital Detox Check | <a href="privacy-ja.html">プライバシーポリシー</a></p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html> 

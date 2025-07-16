@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://oxiclean5.github.io/digital-detox-check/sitemap.xml 

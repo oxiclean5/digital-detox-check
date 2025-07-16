@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Result</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const params = new URLSearchParams(window.location.search);
+        const level = params.get('level') || 'safe';
+        const score = params.get('score') || '-';
+        document.querySelectorAll('.result-section').forEach(sec => sec.style.display = 'none');
+        const showSection = document.getElementById('result-' + level);
+        if (showSection) showSection.style.display = 'block';
+        document.querySelectorAll('.score-value').forEach(el => el.textContent = score);
+        // Retake Test 버튼
+        document.querySelectorAll('.restart-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                window.location.href = 'index-en.html';
+            });
+        });
+        // 공유 버튼 환경 분기
+        const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+        const canWebShare = !!navigator.share;
+        if (isMobile && canWebShare) {
+            document.getElementById('mobile-share').style.display = 'block';
+        } else {
+            document.getElementById('pc-share').style.display = 'block';
+        }
+        // Web Share API
+        const universalBtn = document.getElementById('universal-share-btn');
+        if (universalBtn) {
+            universalBtn.addEventListener('click', function() {
+                const title = document.querySelector('.result-section[style*="block"] h2').textContent;
+                const text = document.querySelector('.result-section[style*="block"] p:not([id])').textContent;
+                const url = window.location.href;
+                navigator.share({
+                    title: `[Digital Detox Test Result] ${title}`,
+                    text: text,
+                    url: url
+                });
+            });
+        }
+        // 기존 PC용 공유 버튼 이벤트(카카오, 라인, 페북, 인스타)
+        Kakao.init('aa8b0feb153da6756132986b3e91f515');
+        document.querySelectorAll('.kakao-share-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const title = document.querySelector('.result-section[style*="block"] h2').textContent;
+                const desc = document.querySelector('.result-section[style*="block"] p:not([id])').textContent;
+                Kakao.Share.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: `[Digital Detox Test Result] ${title}`,
+                        description: desc,
+                        imageUrl: 'img/share_thumbnail.png',
+                        link: { mobileWebUrl: window.location.href, webUrl: window.location.href }
+                    },
+                    buttons: [
+                        { title: 'Take the Test', link: { mobileWebUrl: 'https://your-website-url.com', webUrl: 'https://your-website-url.com' } }
+                    ]
+                });
+            });
+        });
+        document.querySelectorAll('.facebook-share-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+            });
+        });
+        document.querySelectorAll('.line-share-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent(document.querySelector('.result-section[style*="block"] h2').textContent);
+                window.open(`https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
+            });
+        });
+        document.querySelectorAll('.copy-link-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    const copiedText = 'Copied!';
+                    e.target.textContent = copiedText;
+                    setTimeout(() => { e.target.textContent = 'Copy Link for Instagram'; }, 2000);
+                }).catch(() => {
+                    alert('Failed to copy link.');
+                });
+            });
+        });
+    });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <section id="result-safe" class="result-section">
+            <i class="result-icon fa-solid fa-face-smile-beam" style="color: #2ecc71;"></i>
+            <h2>✨ Master of Digital Clean Zone ✨</h2>
+            <div class="score-gauge"><div class="gauge-bar" style="background-color: #2ecc71;"></div></div>
+            <p id="score-text">Your score: <span class="score-value">-</span></p>
+            <img src="img/safe.png" alt="Safe Result" class="result-image">
+            <p>Congratulations! You are the owner of your smartphone and a model citizen of the digital world. You are not anxious even if you log out sometimes. You are a true master!</p>
+            <div class="result-content">
+                <h3>Try these tips!</h3>
+                <ul>
+                    <li><strong>Practice a 'Digital Fasting Day' once a week:</strong> Try intentionally staying away from your phone in the evening and enjoy books or music.</li>
+                    <li><strong>Explore new offline hobbies:</strong> Find new activities to further enhance your sense of balance.</li>
+                    <li><strong>Spread positive influence:</strong> If you have friends struggling with smartphone use, share your tips with them.</li>
+                </ul>
+            </div>
+            <div class="share-buttons">
+                <div id="mobile-share" style="display:none;">
+                    <button id="universal-share-btn" class="share-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+                </div>
+                <div id="pc-share" style="display:none;">
+                    <button class="share-btn kakao kakao-share-btn"><i class="fa-solid fa-comment"></i> KakaoTalk</button>
+                    <button class="share-btn line line-share-btn"><i class="fa-brands fa-line"></i> LINE</button>
+                    <button class="share-btn facebook facebook-share-btn"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
+                    <button class="share-btn instagram copy-link-btn"><i class="fa-brands fa-instagram"></i> Copy Link for Instagram</button>
+                </div>
+                <p class="share-title">Share Result</p>
+            </div>
+            <button class="restart-btn">Retake Test</button>
+        </section>
+        <section id="result-warning" class="result-section">
+            <i class="result-icon fa-solid fa-face-meh" style="color: #f39c12;"></i>
+            <h2>📱 In a Love-Hate Relationship with Your Smartphone 💔</h2>
+            <div class="score-gauge"><div class="gauge-bar" style="background-color: #f39c12;"></div></div>
+            <p id="score-text">Your score: <span class="score-value">-</span></p>
+            <img src="img/warning.png" alt="Warning Result" class="result-image">
+            <p>You have a love-hate relationship with your smartphone. Do you often experience the magic of 'just a minute' turning into 3 a.m.? It's not too late!</p>
+            <div class="result-content">
+                <h3>Try these tips!</h3>
+                <ul>
+                    <li><strong>Declare your bedroom a 'Smartphone Clean Zone':</strong> Leave your charger outside and use a cheap alarm clock. The effect will surprise you!</li>
+                    <li><strong>Turn off unnecessary notifications:</strong> Disable notifications for shopping, games, and other non-essential apps. Take control of your time!</li>
+                    <li><strong>Set app usage limits:</strong> Use your phone's screen time feature to limit time on SNS, YouTube, etc. Let your phone nag you!</li>
+                </ul>
+            </div>
+            <div class="share-buttons">
+                <div id="mobile-share" style="display:none;">
+                    <button id="universal-share-btn" class="share-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+                </div>
+                <div id="pc-share" style="display:none;">
+                    <button class="share-btn kakao kakao-share-btn"><i class="fa-solid fa-comment"></i> KakaoTalk</button>
+                    <button class="share-btn line line-share-btn"><i class="fa-brands fa-line"></i> LINE</button>
+                    <button class="share-btn facebook facebook-share-btn"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
+                    <button class="share-btn instagram copy-link-btn"><i class="fa-brands fa-instagram"></i> Copy Link for Instagram</button>
+                </div>
+                <p class="share-title">Share Result</p>
+            </div>
+            <button class="restart-btn">Retake Test</button>
+        </section>
+        <section id="result-danger" class="result-section">
+            <i class="result-icon fa-solid fa-face-dizzy" style="color: #e74c3c;"></i>
+            <h2>😵 Almost One with Your Smartphone 😵</h2>
+            <div class="score-gauge"><div class="gauge-bar" style="background-color: #e74c3c;"></div></div>
+            <p id="score-text">Your score: <span class="score-value">-</span></p>
+            <img src="img/danger.png" alt="Danger Result" class="result-image">
+            <p>Is your smartphone growing out of your hand? If you are with your phone from the moment you wake up, even in the bathroom, you are a 'pro smartphone user'!</p>
+            <div class="result-content">
+                <h3>Try these tips!</h3>
+                <ul>
+                    <li><strong>Use 'Do Not Disturb' mode actively:</strong> Schedule DND mode during work, study, and sleep to block temptations.</li>
+                    <li><strong>Create physical 'phone-free zones':</strong> Designate places like the dining table or bed as phone-free and make rules with family or roommates.</li>
+                    <li><strong>Plan meaningful alternative activities:</strong> Decide in advance what to do with your phone-free time (e.g., 10-min walk, read 5 pages).</li>
+                </ul>
+            </div>
+            <div class="share-buttons">
+                <div id="mobile-share" style="display:none;">
+                    <button id="universal-share-btn" class="share-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+                </div>
+                <div id="pc-share" style="display:none;">
+                    <button class="share-btn kakao kakao-share-btn"><i class="fa-solid fa-comment"></i> KakaoTalk</button>
+                    <button class="share-btn line line-share-btn"><i class="fa-brands fa-line"></i> LINE</button>
+                    <button class="share-btn facebook facebook-share-btn"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
+                    <button class="share-btn instagram copy-link-btn"><i class="fa-brands fa-instagram"></i> Copy Link for Instagram</button>
+                </div>
+                <p class="share-title">Share Result</p>
+            </div>
+            <button class="restart-btn">Retake Test</button>
+        </section>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2025 Digital Detox Check | <a href="privacy-en.html">Privacy Policy</a></p>
+    </footer>
+</body>
+</html> 

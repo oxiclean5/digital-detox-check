@@ -4,44 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>디지털 디톡스 지수 테스트</title>
+    <meta name="description" content="디지털 디톡스 지수 테스트로 나의 디지털 사용 습관을 점검하고, 건강한 디지털 라이프를 위한 팁을 확인하세요.">
+    <meta name="keywords" content="디지털 디톡스, 스마트폰 중독, 디지털 습관, 테스트, 집중력, 건강한 사용">
+    <meta property="og:title" content="디지털 디톡스 지수 테스트">
+    <meta property="og:description" content="나의 디지털 사용 습관을 점검하고, 건강한 디지털 라이프를 위한 팁을 확인하세요.">
+    <meta property="og:image" content="img/og-image.png">
+    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="디지털 디톡스 지수 테스트">
+    <meta name="twitter:description" content="나의 디지털 사용 습관을 점검하고, 건강한 디지털 라이프를 위한 팁을 확인하세요.">
+    <meta name="twitter:image" content="img/og-image.png">
+    <link rel="canonical" href="https://yourdomain.com/">
     <link rel="stylesheet" href="style.css">
+    <style>
+      .visually-hidden {
+        position: absolute !important;
+        width: 1px; height: 1px;
+        padding: 0; margin: -1px;
+        overflow: hidden; clip: rect(0,0,0,0);
+        border: 0;
+      }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "디지털 디톡스란?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "디지털 기기 사용을 줄이고 건강한 습관을 만드는 것을 의미합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "디지털 디톡스 테스트는 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "간단한 문항을 통해 나의 디지털 사용 습관을 점검할 수 있는 자가진단 도구입니다."
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
-    <div class="container">
-        <div class="lang-selector">
-            <a href="index.html?lang=ko" class="lang-btn">KO</a>
-            <a href="index.html?lang=en" class="lang-btn">EN</a>
-        </div>
-        <div id="start-screen">
-            <h1>디지털 디톡스 지수 테스트</h1>
-            <p>나는 디지털 세상과 얼마나 가까울까요?<br>간단한 테스트를 통해 나의 디지털 사용 습관을 점검해보세요.</p>
-            <button id="start-btn">테스트 시작하기</button>
-            <div class="info-link-container">
-                <a href="article.html" class="info-link">디지털 디톡스, 왜 필요할까? &rarr;</a>
-                <a href="article-weekend.html" class="info-link">스마트폰 없이 주말 보내기 꿀팁 &rarr;</a>
-                <a href="article-work.html" class="info-link">업무 집중력을 높여주는 디지털 습관 &rarr;</a>
-            </div>
-        </div>
-        <div id="question-screen" class="hidden">
-            <div class="question-header">
-                <div class="question-counter"></div>
-                <div class="progress-bar">
-                    <div class="progress"></div>
+    <header role="banner">
+        <!-- 언어 선택 버튼(nav.lang-selector) 완전히 삭제 -->
+    </header>
+    <main role="main">
+        <section class="container" aria-labelledby="main-title">
+            <nav class="lang-selector" aria-label="언어 선택" role="navigation">
+                <a href="index.html" class="lang-btn" aria-current="page">한국어</a>
+                <a href="index-en.html" class="lang-btn">English</a>
+                <a href="index-ja.html" class="lang-btn">日本語</a>
+            </nav>
+            <section id="start-screen">
+                <h1 id="main-title">디지털 디톡스 재미 테스트</h1>
+                <h2 class="visually-hidden">스마트폰 습관, 디지털 자가진단</h2>
+                <p>나의 스마트폰 습관, 얼마나 심각할까?<br>가볍게 해보는 재미있는 테스트로 내 디지털 생활을 점검해보세요!</p>
+                <button id="start-btn" aria-label="테스트 시작">지금 바로 시작하기 🚀</button>
+                <nav class="info-link-container" aria-label="관련 정보" role="navigation">
+                    <h3 class="visually-hidden">디지털 디톡스 관련 정보</h3>
+                    <a href="article.html" class="info-link" title="디지털 디톡스, 왜 필요할까?">디톡스가 뭐길래? &rarr;</a>
+                    <a href="article-weekend.html" class="info-link" title="스마트폰 없이 주말 보내기 꿀팁">주말엔 폰 없이 살아보기 &rarr;</a>
+                    <a href="article-work.html" class="info-link" title="업무 집중력을 높여주는 디지털 습관">일할 때 폰 멀리하는 꿀팁 &rarr;</a>
+                </nav>
+            </section>
+            <section id="question-screen" class="hidden" aria-labelledby="question-title">
+                <div class="question-header">
+                    <div class="question-counter" aria-live="polite"></div>
+                    <div class="progress-bar" aria-label="진행률">
+                        <div class="progress"></div>
+                    </div>
                 </div>
-            </div>
-            <h2 id="question-title"></h2>
-            <div class="options">
-                <button class="option-btn" data-score="2">매우 그렇다</button>
-                <button class="option-btn" data-score="1">가끔 그렇다</button>
-                <button class="option-btn" data-score="0">전혀 그렇지 않다</button>
-            </div>
-        </div>
-    </div>
-
-    <footer class="footer">
+                <h2 id="question-title">질문</h2>
+                <div class="options" role="group" aria-label="답변 선택지">
+                    <button class="option-btn" data-score="2" aria-label="매우 그렇다">매우 그렇다</button>
+                    <button class="option-btn" data-score="1" aria-label="가끔 그렇다">가끔 그렇다</button>
+                    <button class="option-btn" data-score="0" aria-label="전혀 그렇지 않다">전혀 그렇지 않다</button>
+                </div>
+            </section>
+        </section>
+    </main>
+    <footer class="footer" role="contentinfo">
         <p>&copy; 2025 Digital Detox Check | <a href="privacy.html">개인정보처리방침</a></p>
     </footer>
-
+    <script>
+    window.questions_ko = [
+        "잠자리에 누워서도 스마트폰을 놓지 못할 때가 많다.",
+        "특별한 알림이 오지 않아도 수시로 스마트폰을 열어 확인한다.",
+        "친구, 가족과 함께 있을 때 대화보다 스마트폰에 더 집중할 때가 있다.",
+        "잠깐만 보려고 시작했다가, 의도했던 것보다 훨씬 오랜 시간 스마트폰을 사용하곤 한다.",
+        "스마트폰이 근처에 없으면 불안하거나 초조함을 느낀다.",
+        "스트레스를 받거나 우울할 때, 기분 전환을 위해 스마트폰 세상으로 피하는 경향이 있다.",
+        "화장실에 갈 때나 짧은 거리를 이동할 때도 스마트폰을 꼭 챙긴다.",
+        "업무나 공부에 집중해야 할 때, 스마트폰 때문에 흐름이 끊기는 경우가 잦다.",
+        "스마트폰을 장시간 사용한 후에 눈이 뻑뻑하거나 목, 어깨에 통증을 느낀다.",
+        "스마트폰 사용 때문에 다른 취미나 운동에 소홀해진다고 느낀다."
+    ];
+    </script>
     <script src="script.js"></script>
 </body>
 </html>

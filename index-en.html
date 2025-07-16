@@ -4,39 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital Detox Index Test</title>
+    <meta name="description" content="Check your digital habits with the Digital Detox Index Test and get tips for a healthier digital life.">
+    <meta name="keywords" content="digital detox, smartphone addiction, digital habits, test, focus, healthy use">
     <link rel="stylesheet" href="style.css">
+    <style>
+      .visually-hidden {
+        position: absolute !important;
+        width: 1px; height: 1px;
+        padding: 0; margin: -1px;
+        overflow: hidden; clip: rect(0,0,0,0);
+        border: 0;
+      }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="lang-selector">
-            <a href="index.html?lang=ko" class="lang-btn">KO</a>
-            <a href="index.html?lang=en" class="lang-btn">EN</a>
-        </div>
-        <div id="start-screen">
-            <h1>Digital Detox Index Test</h1>
-            <p>How close are you to the digital world?<br>Take a simple test to check your digital habits.</p>
-            <button id="start-btn">Start Test</button>
-        </div>
-        <div id="question-screen" class="hidden">
-            <div class="question-header">
-                <div class="question-counter"></div>
-                <div class="progress-bar">
-                    <div class="progress"></div>
+    <header role="banner">
+        <!-- 언어 선택 버튼(nav.lang-selector) 완전히 삭제 -->
+    </header>
+    <main role="main">
+        <section class="container" aria-labelledby="main-title">
+            <nav class="lang-selector" aria-label="Language selection" role="navigation">
+                <a href="index.html" class="lang-btn">한국어</a>
+                <a href="index-en.html" class="lang-btn" aria-current="page">English</a>
+                <a href="index-ja.html" class="lang-btn">日本語</a>
+            </nav>
+            <section id="start-screen">
+                <h1 id="main-title">Digital Detox Fun Test</h1>
+                <h2 class="visually-hidden">Smartphone addiction, digital habits self-diagnosis</h2>
+                <p>How serious are your smartphone habits?<br>Check your digital life with this fun and easy test!</p>
+                <button id="start-btn" aria-label="Start Test">Start Now 🚀</button>
+                <nav class="info-link-container" aria-label="Related Information" role="navigation">
+                    <h3 class="visually-hidden">Digital Detox Related Information</h3>
+                    <a href="article-en.html" class="info-link" title="What is digital detox?">What is digital detox? &rarr;</a>
+                    <a href="article-weekend-en.html" class="info-link" title="Tips for a Smartphone-Free Weekend">Smartphone-Free Weekend Tips &rarr;</a>
+                    <a href="article-work-en.html" class="info-link" title="Digital Habits for Better Focus at Work">Work Focus Digital Habits &rarr;</a>
+                </nav>
+            </section>
+            <section id="question-screen" class="hidden" aria-labelledby="question-title">
+                <div class="question-header">
+                    <div class="question-counter" aria-live="polite"></div>
+                    <div class="progress-bar" aria-label="Progress">
+                        <div class="progress"></div>
+                    </div>
                 </div>
-            </div>
-            <h2 id="question-title"></h2>
-            <div class="options">
-                <button class="option-btn" data-score="2">Strongly Agree</button>
-                <button class="option-btn" data-score="1">Agree</button>
-                <button class="option-btn" data-score="0">Disagree</button>
-            </div>
-        </div>
-    </div>
-
-    <footer class="footer">
+                <h2 id="question-title">Question</h2>
+                <div class="options" role="group" aria-label="Answer choices">
+                    <button class="option-btn" data-score="2" aria-label="Strongly Agree">Strongly Agree</button>
+                    <button class="option-btn" data-score="1" aria-label="Sometimes">Sometimes</button>
+                    <button class="option-btn" data-score="0" aria-label="Not at all">Not at all</button>
+                </div>
+            </section>
+        </section>
+    </main>
+    <footer class="footer" role="contentinfo">
         <p>&copy; 2025 Digital Detox Check | <a href="privacy-en.html">Privacy Policy</a></p>
     </footer>
-
+    <script>
+    window.questions_en = [
+        "Do you often find yourself unable to put down your smartphone even when in bed?",
+        "Do you frequently check your smartphone even when there are no specific notifications?",
+        "When with friends or family, do you sometimes focus more on your smartphone than on the conversation?",
+        "Do you often end up using your smartphone for much longer than intended, even if you only planned to check it briefly?",
+        "Do you feel anxious or uneasy when your smartphone is not nearby?",
+        "When stressed or depressed, do you tend to escape into the smartphone world for a change of mood?",
+        "Do you always take your smartphone with you, even for short trips like going to the restroom?",
+        "When you need to concentrate on work or study, does your smartphone often interrupt your flow?",
+        "Do you experience eye strain, neck, or shoulder pain after prolonged smartphone use?",
+        "Do you feel that your smartphone use has led you to neglect other hobbies or physical activities?"
+    ];
+    </script>
     <script src="script.js"></script>
 </body>
-</html>
+</html> 

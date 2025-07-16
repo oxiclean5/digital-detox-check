@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テスト結果</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const params = new URLSearchParams(window.location.search);
+        const level = params.get('level') || 'safe';
+        const score = params.get('score') || '-';
+        document.querySelectorAll('.result-section').forEach(sec => sec.style.display = 'none');
+        const showSection = document.getElementById('result-' + level);
+        if (showSection) showSection.style.display = 'block';
+        document.querySelectorAll('.score-value').forEach(el => el.textContent = score);
+        // テストをやり直す 버튼
+        document.querySelectorAll('.restart-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                window.location.href = 'index-ja.html';
+            });
+        });
+        // 공유 버튼 환경 분기
+        const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+        const canWebShare = !!navigator.share;
+        if (isMobile && canWebShare) {
+            document.getElementById('mobile-share').style.display = 'block';
+        } else {
+            document.getElementById('pc-share').style.display = 'block';
+        }
+        // Web Share API
+        const universalBtn = document.getElementById('universal-share-btn');
+        if (universalBtn) {
+            universalBtn.addEventListener('click', function() {
+                const title = document.querySelector('.result-section[style*="block"] h2').textContent;
+                const text = document.querySelector('.result-section[style*="block"] p:not([id])').textContent;
+                const url = window.location.href;
+                navigator.share({
+                    title: `[デジタルデトックステスト結果] ${title}`,
+                    text: text,
+                    url: url
+                });
+            });
+        }
+        // 기존 PC용 공유 버튼 이벤트(카카오, 라인, 페북, 인스타)
+        Kakao.init('aa8b0feb153da6756132986b3e91f515');
+        document.querySelectorAll('.kakao-share-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const title = document.querySelector('.result-section[style*="block"] h2').textContent;
+                const desc = document.querySelector('.result-section[style*="block"] p:not([id])').textContent;
+                Kakao.Share.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: `[デジタルデトックステスト結果] ${title}`,
+                        description: desc,
+                        imageUrl: 'img/share_thumbnail.png',
+                        link: { mobileWebUrl: window.location.href, webUrl: window.location.href }
+                    },
+                    buttons: [
+                        { title: 'テストを受ける', link: { mobileWebUrl: 'https://your-website-url.com', webUrl: 'https://your-website-url.com' } }
+                    ]
+                });
+            });
+        });
+        document.querySelectorAll('.facebook-share-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
+            });
+        });
+        document.querySelectorAll('.line-share-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent(document.querySelector('.result-section[style*="block"] h2').textContent);
+                window.open(`https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
+            });
+        });
+        document.querySelectorAll('.copy-link-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    const copiedText = 'コピー完了!';
+                    e.target.textContent = copiedText;
+                    setTimeout(() => { e.target.textContent = 'インスタ用リンクコピー'; }, 2000);
+                }).catch(() => {
+                    alert('リンクのコピーに失敗しました。');
+                });
+            });
+        });
+    });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <section id="result-safe" class="result-section">
+            <i class="result-icon fa-solid fa-face-smile-beam" style="color: #2ecc71;"></i>
+            <h2>✨ デジタルクリーンゾーンの達人 ✨</h2>
+            <div class="score-gauge"><div class="gauge-bar" style="background-color: #2ecc71;"></div></div>
+            <p id="score-text">あなたのスコア: <span class="score-value">-</span></p>
+            <img src="img/safe.png" alt="安全な結果" class="result-image">
+            <p>おめでとうございます！あなたはスマートフォンの主人であり、デジタル世界の模範市民です。時々ログアウトしても不安にならないあなたは、真の上級者です。</p>
+            <div class="result-content">
+                <h3>こんなことを実践してみましょう！</h3>
+                <ul>
+                    <li><strong>週1回「デジタル断食デー」を実践：</strong>夜だけでも意図的にスマホを遠ざけて、本や音楽を楽しんでみましょう。</li>
+                    <li><strong>新しいオフライン趣味を探す：</strong>あなたのバランス感覚をさらに高める新しい活動を見つけてみてください。</li>
+                    <li><strong>良い影響を広める：</strong>スマホで悩んでいる友人がいれば、あなたのコツをそっと教えてあげましょう。</li>
+                </ul>
+            </div>
+            <div class="share-buttons">
+                <div id="mobile-share" style="display:none;">
+                    <button id="universal-share-btn" class="share-btn"><i class="fa-solid fa-share-nodes"></i> シェア</button>
+                </div>
+                <div id="pc-share" style="display:none;">
+                    <button class="share-btn kakao kakao-share-btn"><i class="fa-solid fa-comment"></i> カカオトーク</button>
+                    <button class="share-btn line line-share-btn"><i class="fa-brands fa-line"></i> ライン</button>
+                    <button class="share-btn facebook facebook-share-btn"><i class="fa-brands fa-facebook-f"></i> フェイスブック</button>
+                    <button class="share-btn instagram copy-link-btn"><i class="fa-brands fa-instagram"></i> インスタ用リンクコピー</button>
+                </div>
+                <p class="share-title">結果をシェア</p>
+            </div>
+            <button class="restart-btn">テストをやり直す</button>
+        </section>
+        <section id="result-warning" class="result-section">
+            <i class="result-icon fa-solid fa-face-meh" style="color: #f39c12;"></i>
+            <h2>📱 スマホと愛憎関係 💔</h2>
+            <div class="score-gauge"><div class="gauge-bar" style="background-color: #f39c12;"></div></div>
+            <p id="score-text">あなたのスコア: <span class="score-value">-</span></p>
+            <img src="img/warning.png" alt="注意結果" class="result-image">
+            <p>あなたはスマートフォンと愛憎関係にあります。「ちょっとだけ」のつもりが気づけば深夜3時…そんな魔法をよく経験していませんか？まだ遅くありません！</p>
+            <div class="result-content">
+                <h3>こんなことを実践してみましょう！</h3>
+                <ul>
+                    <li><strong>寝室を「スマホクリーンゾーン」に宣言：</strong>充電器は寝室の外に置き、アラームは安い目覚まし時計を使いましょう。効果に驚くはずです！</li>
+                    <li><strong>不要な通知は思い切ってオフ：</strong>ショッピングやゲームなど、今すぐ確認しなくてもいいアプリの通知はすべてオフにしましょう。自分の時間は自分で守りましょう。</li>
+                    <li><strong>アプリの使用時間制限を設定：</strong>スマホのスクリーンタイム機能でSNSやYouTubeなどに時間制限をかけてみましょう。スマホに注意されるようにしましょう。</li>
+                </ul>
+            </div>
+            <div class="share-buttons">
+                <p class="share-title">結果をシェア</p>
+                <button class="share-btn kakao kakao-share-btn"><i class="fa-solid fa-comment"></i> カカオトーク</button>
+                <button class="share-btn line line-share-btn"><i class="fa-brands fa-line"></i> ライン</button>
+                <button class="share-btn facebook facebook-share-btn"><i class="fa-brands fa-facebook-f"></i> フェイスブック</button>
+                <button class="share-btn instagram copy-link-btn"><i class="fa-brands fa-instagram"></i> インスタ用リンクコピー</button>
+            </div>
+            <button class="restart-btn">テストをやり直す</button>
+        </section>
+        <section id="result-danger" class="result-section">
+            <i class="result-icon fa-solid fa-face-dizzy" style="color: #e74c3c;"></i>
+            <h2>😵 スマホと一心同体 😵</h2>
+            <div class="score-gauge"><div class="gauge-bar" style="background-color: #e74c3c;"></div></div>
+            <p id="score-text">あなたのスコア: <span class="score-value">-</span></p>
+            <img src="img/danger.png" alt="危険な結果" class="result-image">
+            <p>もしかして…スマホが手から生えてきていませんか？目覚めた瞬間からトイレでも一緒のあなたは「プロスマホユーザー」！</p>
+            <div class="result-content">
+                <h3>こんなことを実践してみましょう！</h3>
+                <ul>
+                    <li><strong>「おやすみモード」を積極的に活用：</strong>仕事・勉強・睡眠中はおやすみモードを予約設定して、スマホの誘惑をシャットアウトしましょう。</li>
+                    <li><strong>物理的な「スマホ禁止エリア」を作る：</strong>食卓やベッドなど特定の場所を「スマホフリーゾーン」にして、家族やルームメイトとルールを作りましょう。</li>
+                    <li><strong>意味のある代替活動を計画：</strong>スマホを置いた時間に何をするか、あらかじめ具体的に決めておきましょう（例：10分散歩、本を5ページ読むなど）。</li>
+                </ul>
+            </div>
+            <div class="share-buttons">
+                <p class="share-title">結果をシェア</p>
+                <button class="share-btn kakao kakao-share-btn"><i class="fa-solid fa-comment"></i> カカオトーク</button>
+                <button class="share-btn line line-share-btn"><i class="fa-brands fa-line"></i> ライン</button>
+                <button class="share-btn facebook facebook-share-btn"><i class="fa-brands fa-facebook-f"></i> フェイスブック</button>
+                <button class="share-btn instagram copy-link-btn"><i class="fa-brands fa-instagram"></i> インスタ用リンクコピー</button>
+            </div>
+            <button class="restart-btn">テストをやり直す</button>
+        </section>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2025 Digital Detox Check | <a href="privacy-ja.html">プライバシーポリシー</a></p>
+    </footer>
+</body>
+</html> 
