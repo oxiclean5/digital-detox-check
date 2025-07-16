@@ -16,26 +16,24 @@
         const showSection = document.getElementById('result-' + level);
         if (showSection) showSection.style.display = 'block';
         document.querySelectorAll('.score-value').forEach(el => el.textContent = score);
-        // Retake Test 버튼
-        document.querySelectorAll('.restart-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                window.location.href = 'index-en.html';
-            });
-        });
-        // 공유 버튼 환경 분기
+        // 공유 버튼 환경 분기 (각 섹션 내에서만)
+        const activeSection = showSection;
+        if (!activeSection) return;
         const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
         const canWebShare = !!navigator.share;
-        if (isMobile && canWebShare) {
-            document.getElementById('mobile-share').style.display = 'block';
-        } else {
-            document.getElementById('pc-share').style.display = 'block';
+        const mobileShare = activeSection.querySelector('.mobile-share');
+        const pcShare = activeSection.querySelector('.pc-share');
+        if (isMobile && canWebShare && mobileShare) {
+            mobileShare.style.display = 'block';
+        } else if (pcShare) {
+            pcShare.style.display = 'block';
         }
         // Web Share API
-        const universalBtn = document.getElementById('universal-share-btn');
+        const universalBtn = activeSection.querySelector('.universal-share-btn');
         if (universalBtn) {
             universalBtn.addEventListener('click', function() {
-                const title = document.querySelector('.result-section[style*="block"] h2').textContent;
-                const text = document.querySelector('.result-section[style*="block"] p:not([id])').textContent;
+                const title = activeSection.querySelector('h2').textContent;
+                const text = activeSection.querySelector('p:not([id])').textContent;
                 const url = window.location.href;
                 navigator.share({
                     title: `[Digital Detox Test Result] ${title}`,
@@ -46,10 +44,10 @@
         }
         // 기존 PC용 공유 버튼 이벤트(카카오, 라인, 페북, 인스타)
         Kakao.init('aa8b0feb153da6756132986b3e91f515');
-        document.querySelectorAll('.kakao-share-btn').forEach(btn => {
+        activeSection.querySelectorAll('.kakao-share-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                const title = document.querySelector('.result-section[style*="block"] h2').textContent;
-                const desc = document.querySelector('.result-section[style*="block"] p:not([id])').textContent;
+                const title = activeSection.querySelector('h2').textContent;
+                const desc = activeSection.querySelector('p:not([id])').textContent;
                 Kakao.Share.sendDefault({
                     objectType: 'feed',
                     content: {
@@ -59,25 +57,25 @@
                         link: { mobileWebUrl: window.location.href, webUrl: window.location.href }
                     },
                     buttons: [
-                        { title: 'Take the Test', link: { mobileWebUrl: 'https://your-website-url.com', webUrl: 'https://your-website-url.com' } }
+                        { title: 'Take the Test', link: { mobileWebUrl: 'https://oxiclean5.github.io/digital-detox-check/', webUrl: 'https://oxiclean5.github.io/digital-detox-check/' } }
                     ]
                 });
             });
         });
-        document.querySelectorAll('.facebook-share-btn').forEach(btn => {
+        activeSection.querySelectorAll('.facebook-share-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const url = encodeURIComponent(window.location.href);
                 window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
             });
         });
-        document.querySelectorAll('.line-share-btn').forEach(btn => {
+        activeSection.querySelectorAll('.line-share-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const url = encodeURIComponent(window.location.href);
-                const text = encodeURIComponent(document.querySelector('.result-section[style*="block"] h2').textContent);
+                const text = encodeURIComponent(activeSection.querySelector('h2').textContent);
                 window.open(`https://social-plugins.line.me/lineit/share?url=${url}&text=${text}`, '_blank', 'width=600,height=400');
             });
         });
-        document.querySelectorAll('.copy-link-btn').forEach(btn => {
+        activeSection.querySelectorAll('.copy-link-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 navigator.clipboard.writeText(window.location.href).then(() => {
                     const copiedText = 'Copied!';
@@ -109,10 +107,10 @@
                 </ul>
             </div>
             <div class="share-buttons">
-                <div id="mobile-share" style="display:none;">
-                    <button id="universal-share-btn" class="share-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+                <div class="mobile-share" style="display:none;">
+                    <button class="universal-share-btn share-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
                 </div>
-                <div id="pc-share" style="display:none;">
+                <div class="pc-share" style="display:none;">
                     <button class="share-btn kakao kakao-share-btn"><i class="fa-solid fa-comment"></i> KakaoTalk</button>
                     <button class="share-btn line line-share-btn"><i class="fa-brands fa-line"></i> LINE</button>
                     <button class="share-btn facebook facebook-share-btn"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
@@ -138,10 +136,10 @@
                 </ul>
             </div>
             <div class="share-buttons">
-                <div id="mobile-share" style="display:none;">
-                    <button id="universal-share-btn" class="share-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+                <div class="mobile-share" style="display:none;">
+                    <button class="universal-share-btn share-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
                 </div>
-                <div id="pc-share" style="display:none;">
+                <div class="pc-share" style="display:none;">
                     <button class="share-btn kakao kakao-share-btn"><i class="fa-solid fa-comment"></i> KakaoTalk</button>
                     <button class="share-btn line line-share-btn"><i class="fa-brands fa-line"></i> LINE</button>
                     <button class="share-btn facebook facebook-share-btn"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
@@ -167,10 +165,10 @@
                 </ul>
             </div>
             <div class="share-buttons">
-                <div id="mobile-share" style="display:none;">
-                    <button id="universal-share-btn" class="share-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+                <div class="mobile-share" style="display:none;">
+                    <button class="universal-share-btn share-btn"><i class="fa-solid fa-share-nodes"></i> Share</button>
                 </div>
-                <div id="pc-share" style="display:none;">
+                <div class="pc-share" style="display:none;">
                     <button class="share-btn kakao kakao-share-btn"><i class="fa-solid fa-comment"></i> KakaoTalk</button>
                     <button class="share-btn line line-share-btn"><i class="fa-brands fa-line"></i> LINE</button>
                     <button class="share-btn facebook facebook-share-btn"><i class="fa-brands fa-facebook-f"></i> Facebook</button>
