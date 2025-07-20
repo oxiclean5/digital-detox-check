@@ -267,8 +267,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     {
                         title: shareData.testLinkTitle,
                         link: {
-                            mobileWebUrl: `https://your-website-url.com`, // 배포 후 실제 주소로 변경
-                            webUrl: `https://your-website-url.com`, // 배포 후 실제 주소로 변경
+                            mobileWebUrl: `https://curious-empanada-56d5dc.netlify.app/`, // 배포 후 실제 주소로 변경
+                            webUrl: `https://curious-empanada-56d5dc.netlify.app/`, // 배포 후 실제 주소로 변경
                         },
                     },
                 ],

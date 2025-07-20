@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://oxiclean5.github.io/digital-detox-check/sitemap.xml 
+Sitemap: https://curious-empanada-56d5dc.netlify.app/sitemap.xml 
