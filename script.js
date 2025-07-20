@@ -50,12 +50,8 @@ window.getShareData = function(resultData, lang) {
 
 document.addEventListener('DOMContentLoaded', () => {
     // index.html 페이지 로직
-    if (
-        window.location.pathname.includes('index.html') ||
-        window.location.pathname.includes('index-en.html') ||
-        window.location.pathname.includes('index-ja.html') ||
-        window.location.pathname === '/'
-    ) {
+    // URL 경로 대신 특정 요소의 존재 여부로 시작 페이지를 확인하여 안정성을 높입니다.
+    if (document.getElementById('start-screen')) {
         const startScreen = document.getElementById('start-screen');
         const questionScreen = document.getElementById('question-screen');
         const startBtn = document.getElementById('start-btn');
