@@ -58,7 +58,7 @@
                         link: { mobileWebUrl: window.location.href, webUrl: window.location.href }
                     },
                     buttons: [
-                        { title: 'Take the Test', link: { mobileWebUrl: 'https://oxiclean5.github.io/digital-detox-check/', webUrl: 'https://oxiclean5.github.io/digital-detox-check/' } }
+                        { title: 'Take the Test', link: { mobileWebUrl: 'https://curious-empanada-56d5dc.netlify.app/index-en.html', webUrl: 'https://curious-empanada-56d5dc.netlify.app/index-en.html' } }
                     ]
                 });
             });
@@ -85,6 +85,12 @@
                 }).catch(() => {
                     alert('Failed to copy link.');
                 });
+            });
+        });
+        // Retake Test 버튼 동작 추가
+        activeSection.querySelectorAll('.restart-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                window.location.href = 'index-en.html';
             });
         });
     });
